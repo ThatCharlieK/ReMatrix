@@ -2,14 +2,9 @@ example_matrix = [[1, 1, 1, 1],
                   [1, 1, 1, 1],
                   [1, 1, 1, 1]]
 
-matrix_to_solve = [[1, 3, 7, 2],
-                   [7, 3, 1, 6],
-                   [6, 5, 6, 1]]
-
-step_2 =   [[1, 3, 7, 2],
-            [0, 3, 1, 6],
-            [0, 5, 6, 1]]
-
+test_1 = [[1, 3, 7, 2],
+           [7, 3, 1, 6],
+           [6, 5, 6, 1]]
 
 
 def row_reduce_matrix(matrix):
@@ -21,12 +16,13 @@ def row_reduce_matrix(matrix):
             # only row reduce the spot in the matrix if its not a leading zero and its not zeroed already
             if row != col and matrix[row][col] != 0:
                 zero_value_with_reduction(matrix, row, col)
+    reduce_rows_to_lowest_terms(matrix)
 
-
-"""
-Zeros value at matrix[row][col] using the others rows in the matrix using reduction
-"""
 def zero_value_with_reduction(matrix, row, col):
+    """
+    Zeros value at matrix[row][col] using the others rows in the matrix using reduction
+    """
+
     if(matrix[row][col] == 0):
         return
     # To zero the matrix[row] row, find another row to subtract from it
@@ -44,21 +40,28 @@ def zero_value_with_reduction(matrix, row, col):
             return
 
 
-"""
-Reduces the row so that at least one of the terms is 1
-E.g [5, 0, 0, 15] -> [1, 0, 0, 3]
-"""
 def reduce_rows_to_lowest_terms(matrix):
+    """
+    Reduces the row so that at least one of the terms is 1
+    E.g [5, 0, 0, 15] -> [1, 0, 0, 3]
+    :param matrix:
+    :return:
+    """
     for r in range(len(matrix)):
-        lowest_term = min(abs(item) for item in matrix[r] if item != 0)
-        divide_row(matrix, r, lowest_term)
+        for c in range(len(matrix[r])):
+            # divide each row by the first term in the row
+            if(matrix[r][c] != 0):
+                divide_row(matrix, r, matrix[r][c])
+                break
 
 
 def multiply_row(matrix, row, factor):
     matrix[row] = [item * factor for item in matrix[row]]
 
+
 def divide_row(matrix, row, divisor):
     matrix[row] = [item / divisor for item in matrix[row]]
+
 
 def add_row_a_to_b(matrix, rowANumber, rowBNumber):
     matrix[rowBNumber] = [a + b for a, b in zip(matrix[rowANumber], matrix[rowBNumber])]
@@ -69,6 +72,10 @@ def subtract_row_a_from_b(matrix, row_a_number, row_b_number):
 
 
 def is_matrix_rectangular(matrix):
+    row_length = len(matrix[0])
+    for row in matrix:
+        if len(row) != row_length:
+            return False
     return True
 
 
@@ -88,18 +95,7 @@ def print_aligned_matrix(matrix):
         print(formatted_row)
     print("------------------")
 
-print_aligned_matrix(matrix_to_solve)
-zero_value_with_reduction(matrix_to_solve, 1, 0)
-print_aligned_matrix(matrix_to_solve)
-zero_value_with_reduction(matrix_to_solve, 2, 0)
-print_aligned_matrix(matrix_to_solve)
-zero_value_with_reduction(matrix_to_solve, 0, 1)
-print_aligned_matrix(matrix_to_solve)
-zero_value_with_reduction(matrix_to_solve, 2, 1)
-print_aligned_matrix(matrix_to_solve)
-zero_value_with_reduction(matrix_to_solve, 0, 2)
-print_aligned_matrix(matrix_to_solve)
-zero_value_with_reduction(matrix_to_solve, 1, 2)
-print_aligned_matrix(matrix_to_solve)
-reduce_rows_to_lowest_terms(matrix_to_solve)
-print_aligned_matrix(matrix_to_solve)
+
+print_aligned_matrix(test_1)
+row_reduce_matrix(test_1)
+print_aligned_matrix(test_1)
