@@ -1,11 +1,4 @@
-example_matrix = [[1, 1, 1, 1],
-                  [1, 1, 1, 1],
-                  [1, 1, 1, 1]]
-
-test_1 = [[1, 3, 7, 2],
-           [7, 3, 1, 6],
-           [6, 5, 6, 1]]
-
+import random
 
 def row_reduce_matrix(matrix):
     if not is_matrix_rectangular(matrix):
@@ -18,12 +11,12 @@ def row_reduce_matrix(matrix):
                 zero_value_with_reduction(matrix, row, col)
     reduce_rows_to_lowest_terms(matrix)
 
+
 def zero_value_with_reduction(matrix, row, col):
     """
     Zeros value at matrix[row][col] using the others rows in the matrix using reduction
     """
-
-    if(matrix[row][col] == 0):
+    if matrix[row][col] == 0:
         return
     # To zero the matrix[row] row, find another row to subtract from it
     for i in range(len(matrix)):
@@ -50,7 +43,7 @@ def reduce_rows_to_lowest_terms(matrix):
     for r in range(len(matrix)):
         for c in range(len(matrix[r])):
             # divide each row by the first term in the row
-            if(matrix[r][c] != 0):
+            if matrix[r][c] != 0:
                 divide_row(matrix, r, matrix[r][c])
                 break
 
@@ -63,8 +56,8 @@ def divide_row(matrix, row, divisor):
     matrix[row] = [item / divisor for item in matrix[row]]
 
 
-def add_row_a_to_b(matrix, rowANumber, rowBNumber):
-    matrix[rowBNumber] = [a + b for a, b in zip(matrix[rowANumber], matrix[rowBNumber])]
+def add_row_a_to_b(matrix, row_a_number, row_b_number):
+    matrix[row_b_number] = [a + b for a, b in zip(matrix[row_a_number], matrix[row_b_number])]
 
 
 def subtract_row_a_from_b(matrix, row_a_number, row_b_number):
@@ -96,6 +89,19 @@ def print_aligned_matrix(matrix):
     print("------------------")
 
 
-print_aligned_matrix(test_1)
-row_reduce_matrix(test_1)
-print_aligned_matrix(test_1)
+def create_test_matrix(width, height, min, max):
+    """
+    :param width: the width of the resulting matrix
+    :param height: the height of the resulting matrix
+    :param min: the minimum value an item in the matrix can be
+    :param max: the maximum value an item in the matrix can be
+    :return: a width * height matrix
+    """
+    result = []
+    for h in range(height):
+        row = []
+        for w in range(width):
+            row.append(random.randint(min, max))
+        result.append(row)
+    return result
+
