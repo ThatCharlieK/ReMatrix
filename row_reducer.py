@@ -5,19 +5,20 @@ def row_reduce_matrix(matrix):
     if not is_matrix_rectangular(matrix):
         raise ValueError("Input matrix must be rectangular to perform row reduction.")
     row_length = len(matrix[0])
+    print("--- initial matrix ---")
+    print_aligned_matrix(matrix)
 
     for col in range(len(matrix[1])):
         for row in range(len(matrix)):
             # only row reduce the spot in the matrix if:
             # 1. it's not a leading zero
-            # 2. its not zeroed already
+            # 2. it's not zeroed already
             # 3. It's not in the rightmost column (the right side of the equation
             if row != col and matrix[row][col] != 0 and col != row_length-1:
-                print(f"reducing row {row} and col {col}")
                 zero_value_with_reduction(matrix, row, col)
-                print_aligned_matrix(matrix)
+            reduce_rows_to_lowest_terms(matrix) # this line is optional, but prevents the matrix values from getting absurdley high
     reduce_rows_to_lowest_terms(matrix)
-    print("reducing matrix to lowest terms")
+    print("--- row-reduced matrix ---")
     print_aligned_matrix(matrix)
 
 
@@ -126,7 +127,7 @@ def get_matrix_solutions(matrix):
 def check_solution_set(original_matrix, solution_set):
     """
     :param original_matrix: The matrix that's not row-reduced
-    :param solution_set: a list [x_1, x_2, x_3...]
+    :param solution_set: a list of [x_1, x_2, x_3...]
     :return:
     """
     def is_a_within_margin_of_b(a, b):

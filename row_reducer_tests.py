@@ -4,7 +4,7 @@ test_1 = [[8, 2, 3, 4],
           [7, 9, 2, 5]]
 
 if __name__ == "__main__":
-    test_2 = row_reducer.create_test_matrix(10, 9, 1, 10)
+    test_2 = row_reducer.create_test_matrix(100, 99, 1, 10)
     stored_test_2 = [row[:] for row in test_2]
     row_reducer.row_reduce_matrix(test_2)
     solutions = row_reducer.get_matrix_solutions(test_2)
