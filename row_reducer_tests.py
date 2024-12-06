@@ -1,6 +1,11 @@
 import row_reducer
+test_1 = [[8, 2, 3, 4],
+          [5, 3, 7, 8],
+          [7, 9, 2, 5]]
+
 if __name__ == "__main__":
-    test_1 = row_reducer.create_test_matrix(5, 4, -50, 50)
-    row_reducer.print_aligned_matrix(test_1)
-    row_reducer.row_reduce_matrix(test_1)
-    row_reducer.print_aligned_matrix(test_1)
+    test_2 = row_reducer.create_test_matrix(10, 9, 1, 10)
+    stored_test_2 = [row[:] for row in test_2]
+    row_reducer.row_reduce_matrix(test_2)
+    solutions = row_reducer.get_matrix_solutions(test_2)
+    print(row_reducer.check_solution_set(stored_test_2, solutions))
