@@ -16,10 +16,16 @@ def row_reduce_matrix(matrix):
             # 3. It's not in the rightmost column (the right side of the equation
             if row != col and matrix[row][col] != 0 and col != row_length-1:
                 zero_value_with_reduction(matrix, row, col)
-            reduce_rows_to_lowest_terms(matrix) # this line is optional, but prevents the matrix values from getting absurdley high
-    reduce_rows_to_lowest_terms(matrix)
+            reduce_row_to_lowest_terms(matrix, row) # this line is optional, but prevents the matrix values from getting absurdley high
     print("--- row-reduced matrix ---")
     print_aligned_matrix(matrix)
+
+
+def reduce_row_to_lowest_terms(matrix, row):
+    for c in range(len(matrix[row])):
+        if matrix[row][c] != 0:
+            divide_row(matrix, row, matrix[row][c])
+            break
 
 
 def zero_value_with_reduction(matrix, row, col):
@@ -51,11 +57,7 @@ def reduce_rows_to_lowest_terms(matrix):
     :return:
     """
     for r in range(len(matrix)):
-        for c in range(len(matrix[r])):
-            # divide each row by the first term in the row
-            if matrix[r][c] != 0:
-                divide_row(matrix, r, matrix[r][c])
-                break
+        reduce_row_to_lowest_terms(matrix, r)
 
 
 def multiply_row(matrix, row, factor):
