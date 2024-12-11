@@ -7,8 +7,7 @@ def row_reduce_matrix(matrix):
     row_length = len(matrix[0])
     print("--- initial matrix ---")
     print_aligned_matrix(matrix)
-
-    for col in range(len(matrix[1])):
+    for col in range(len(matrix[0])):
         for row in range(len(matrix)):
             # only row reduce the spot in the matrix if:
             # 1. it's not a leading zero
@@ -121,9 +120,33 @@ def create_test_matrix(width, height, min, max):
 def get_matrix_solutions(matrix):
     solution_set = []
     for i in range(len(matrix)):
-        solution_set.append(matrix[i][-1])
-        print(f"x_{i} = {matrix[i][-1]}")
+        if all(x == 0 for x in matrix[i][:-1] ):
+            # when there is no solution from that line
+            solution_set.append(None)
+        else:
+            solution_set.append(matrix[i][-1])
     return solution_set
+
+
+def print_solution_set(solution_set):
+    """
+    :param solution_set: a solution set, such as the one returned by get_matrix_solutions
+    :return: n/a
+    """
+    print("the solution set is: ")
+    for i in range(len(solution_set)):
+        print(f"x_{i} = {solution_set[i]}")
+
+
+def analyze_row_reduced_matrix(row_reduced_matrix, original_matrix):
+    solution_set = get_matrix_solutions(row_reduced_matrix)
+    print_solution_set(solution_set)
+    correct = check_solution_set(original_matrix, solution_set)
+    if correct:
+        print("The solution set solves the original matrix")
+    else:
+        print("The matrix cannot be solved")
+
 
 
 def check_solution_set(original_matrix, solution_set):
