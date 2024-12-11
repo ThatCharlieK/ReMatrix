@@ -9,10 +9,3 @@ row_reducer.row_reduce_matrix(example_matrix)
 print(example_matrix)
 ```
 
-
-It will turn it to row reduced form:
-```math
-[ 1  0  0  0.0620915032679738  ]
-[ 0  1  0  0.2908496732026147  ]
-[ 0  0  1  9738562091503268    ]
-```
